@@ -9,6 +9,8 @@ import java.awt.BorderLayout;
 import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -16,6 +18,7 @@ import javax.swing.*;
  * @author igor
  */
 public class TopLevelWindow {
+    public static ArrayList<String> response = new ArrayList<>();
     public void start() throws IOException {
         JFrame frame = new JFrame();
         final JTextField textField = new JTextField(15);
@@ -23,17 +26,15 @@ public class TopLevelWindow {
         final JButton button = new JButton("Старт");
         button.setSize(100, 30);
         button.addActionListener(new ActionListener() {
-            public void actionPerfofmed(ActionEvent ae) throws IOException {
-                YandexDictionaryApi yandex = new YandexDictionaryApi();
-                ArrayList<String> response = yandex.sendRequest(textField.getText());
-                JLabel label = new JLabel(response.toString());
-                frame.add(label, BorderLayout.NORTH); 
-                // System.out.println();
-            }
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                YandexDictionaryApi yandex = new YandexDictionaryApi(); 
+                try {
+                    response = yandex.sendRequest(textField.getText());
+                } catch (IOException ex) {
+                    Logger.getLogger(TopLevelWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.out.println("ok");
             }
         });
         JPanel panel = new JPanel();
@@ -41,7 +42,10 @@ public class TopLevelWindow {
         frame.add(panel);
         panel.add(textField);
         panel.add(button);
-        frame.setSize(300, 900);
+        JLabel label = new JLabel(response.toString());
+        label.setSize(200, 400);
+        frame.add(label);
+        frame.setSize(300, 700);
         frame.setLocation(1500, 50);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
