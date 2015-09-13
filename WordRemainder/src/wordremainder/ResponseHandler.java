@@ -10,13 +10,15 @@ package wordremainder;
  * @author igor
  */
 public class ResponseHandler {
+    String result;
     public String remake(String word, String response) {
-        String result = "";
-        //for (int i = 0; i < response.length(); i++) {
+        try {
         String[] tags = response.split("><");
         result = tags[5].replaceAll("text>", "");
         result = result.replaceAll("</text", "");
-        //}
+        return word + " - " + result + ";";
+        } catch (ArrayIndexOutOfBoundsException e) {}
+        result = "нет перевода";
         return word + " - " + result + ";";
     }
 }
