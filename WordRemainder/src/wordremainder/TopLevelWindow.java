@@ -5,7 +5,6 @@
  */
 package wordremainder;
 
-import java.awt.BorderLayout;
 import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +22,8 @@ public class TopLevelWindow {
         JFrame frame = new JFrame();
         final JTextField textField = new JTextField(15);
         textField.setSize(100, 30);
+        ResponseHandler handler = new ResponseHandler();
+        JLabel label = new JLabel();
         final JButton button = new JButton("Старт");
         button.setSize(100, 30);
         button.addActionListener(new ActionListener() {
@@ -34,7 +35,8 @@ public class TopLevelWindow {
                 } catch (IOException ex) {
                     Logger.getLogger(TopLevelWindow.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                System.out.println("ok");
+                label.setText(handler.remake(textField.getText(), response.toString()));
+                System.out.println(handler.remake(textField.getText(), response.toString()));
             }
         });
         JPanel panel = new JPanel();
@@ -42,7 +44,6 @@ public class TopLevelWindow {
         frame.add(panel);
         panel.add(textField);
         panel.add(button);
-        JLabel label = new JLabel(response.toString());
         label.setSize(200, 400);
         frame.add(label);
         frame.setSize(300, 700);
@@ -50,10 +51,4 @@ public class TopLevelWindow {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    //public void actionPerformed( ActionEvent e )  throws IOException {
-    //    YandexDictionaryApi yandex = new YandexDictionaryApi();
-    //    ArrayList<String> response = yandex.sendRequest(textField.getText());
-    //    JLabel label = new JLabel(response.toString());
-    //    frame.add(label, BorderLayout.NORTH);
-    //}
 }

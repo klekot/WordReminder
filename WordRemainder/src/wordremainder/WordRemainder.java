@@ -5,17 +5,20 @@
  */
 package wordremainder;
 
+import java.io.IOException;
+
 
 /**
  *
- * @author igor
+ * @author Igor Klekotnev
  */
 public class WordRemainder {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         TopLevelWindow window = new TopLevelWindow();
         window.start();
     }
